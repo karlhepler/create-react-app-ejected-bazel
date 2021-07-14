@@ -154,6 +154,7 @@
     ]
   },
   "devDependencies": {
+    "@bazel/bazelisk": "^1.10.0",
     "@bazel/typescript": "^3.7.0"
   }
 }

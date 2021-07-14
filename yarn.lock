@@ -1138,6 +1138,11 @@
     lodash "^4.17.19"
     to-fast-properties "^2.0.0"
 
+"@bazel/bazelisk@^1.10.0":
+  version "1.10.0"
+  resolved "https://registry.yarnpkg.com/@bazel/bazelisk/-/bazelisk-1.10.0.tgz#24520c80c282022238985b4baba337af3d5c4db0"
+  integrity sha512-UpNjMri3GwCfa6nWqdyGbEPZEJViOeLVW0FEKMnQZXny85Sc697E7A6F9Zz9mk81XYG2f/scCbsZYVE9GOqQNQ==
+
 "@bazel/typescript@^3.7.0":
   version "3.7.0"
   resolved "https://registry.yarnpkg.com/@bazel/typescript/-/typescript-3.7.0.tgz#a4d648a36f7ef4960c8a16222f853a4c285a522d"

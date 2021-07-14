@@ -1,0 +1,95 @@
+load("@npm//@bazel/typescript:index.bzl", "ts_project")
+load("@build_bazel_rules_nodejs//:index.bzl", "copy_to_bin", "js_library", "nodejs_binary", "npm_package_bin")
+
+ts_project(
+    name = "tsconfig",
+    srcs = glob(
+        include = [
+            "src/**/*.ts",
+            "src/**/*.tsx",
+        ],
+        exclude = [
+            "src/**/*.test.ts",
+            "src/**/*.test.tsx",
+        ],
+    ),
+    deps = [
+        "@npm//@types/react",
+        "@npm//@types/react-dom",
+        "@npm//react",
+        "@npm//react-dom",
+        "@npm//web-vitals",
+    ],
+)
+
+js_library(
+    name = "package",
+    package_name = "create-react-app-ejected-bazel",
+    srcs = glob([
+        "package.json",
+        "src/**/*.css",
+        "src/**/*.svg",
+    ]),
+    deps = ["tsconfig"],
+)
+
+nodejs_binary(
+    name = "build",
+    chdir = package_name(),
+    data = [
+        "config/env.js",
+        "config/modules.js",
+        "config/paths.js",
+        "config/webpack.config.js",
+        "scripts/build.js",
+        "@npm//@pmmmwh/react-refresh-webpack-plugin",
+        "@npm//babel-loader",
+        "@npm//babel-plugin-named-asset-import",
+        "@npm//babel-preset-react-app",
+        "@npm//bfj",
+        "@npm//case-sensitive-paths-webpack-plugin",
+        "@npm//css-loader",
+        "@npm//eslint-config-react-app",
+        "@npm//eslint-webpack-plugin",
+        "@npm//fs-extra",
+        "@npm//html-webpack-plugin",
+        "@npm//mini-css-extract-plugin",
+        "@npm//optimize-css-assets-webpack-plugin",
+        "@npm//pnp-webpack-plugin",
+        "@npm//postcss-flexbugs-fixes",
+        "@npm//postcss-loader",
+        "@npm//postcss-normalize",
+        "@npm//postcss-preset-env",
+        "@npm//postcss-safe-parser",
+        "@npm//react-dev-utils",
+        "@npm//resolve",
+        "@npm//resolve-url-loader",
+        "@npm//sass-loader",
+        "@npm//terser-webpack-plugin",
+        "@npm//url-loader",
+        "@npm//webpack",
+        "@npm//webpack-manifest-plugin",
+        "@npm//workbox-webpack-plugin",
+    ],
+    entry_point = "scripts/build.js",
+)
+
+copy_to_bin(
+    name = "files",
+    srcs = glob([
+        "package.json",
+        "public/**",
+    ]),
+)
+
+npm_package_bin(
+    name = "bundle",
+    chdir = "$(RULEDIR)",
+    data = [
+        ":files",
+        ":package",
+    ],
+    env = {"BUILD_PATH": "bundle"},
+    output_dir = True,
+    tool = ":build",
+)
