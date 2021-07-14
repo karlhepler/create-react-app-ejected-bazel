@@ -13,6 +13,7 @@ ts_project(
             "src/**/*.test.tsx",
         ],
     ),
+    extends = "//:tsconfig.json",
     deps = [
         "@npm//@types/react",
         "@npm//@types/react-dom",
