@@ -152,5 +152,8 @@
     "presets": [
       "react-app"
     ]
+  },
+  "devDependencies": {
+    "@bazel/typescript": "^3.7.0"
   }
 }
